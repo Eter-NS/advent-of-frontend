@@ -4,8 +4,8 @@ type ReturningFunction<T extends GenericFunction> = (
 	...args: Parameters<T>
 ) => ReturnType<T>;
 
-interface MemoizationCache<Type extends GenericFunction> {
-	[key: string]: ReturnType<Type>;
+interface MemoizationCache<T extends GenericFunction> {
+	[key: string]: ReturnType<T>;
 }
 
 export function memoize<T extends GenericFunction>(
@@ -16,6 +16,7 @@ export function memoize<T extends GenericFunction>(
 	}
 
 	const cache: MemoizationCache<T> = {};
+
 	return (...args) => {
 		const key = args.toString();
 		if (key in cache) {
