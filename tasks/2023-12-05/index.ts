@@ -25,10 +25,10 @@ export class ChristmasEmitter<T extends GenericFunction> {
 		topic.splice(index, 1);
 		return true;
 	}
-	public emit(type: string) {
+	public emit(type: string, ...args: any[]) {
 		const topic = this.topics[type];
 		if (typeof topic === "undefined") return false;
-		topic.forEach((cb) => cb());
+		topic.forEach((cb) => cb(args));
 	}
 	#isTypedArray(unknownArray: unknown): unknownArray is Array<T> {
 		return (
