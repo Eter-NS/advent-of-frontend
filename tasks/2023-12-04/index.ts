@@ -1,32 +1,21 @@
-type GenericFunction = (...args: any[]) => any;
-
-type ReturningFunction<T extends GenericFunction> = (
-	...args: Parameters<T>
-) => ReturnType<T>;
-
-interface MemoizationCache<T extends GenericFunction> {
-	[key: string]: ReturnType<T>;
-}
-
-export function memoize<T extends GenericFunction>(
+export function memoize<T extends (...args: any[]) => any>(
 	callback: T
-): ReturningFunction<T> {
+): (...args: Parameters<T>) => ReturnType<T> {
 	if (typeof callback !== "function") {
 		throw new Error("Function to be memoized must be a function.");
 	}
 
-	const cache: MemoizationCache<T> = {};
+	const cache: Record<string, ReturnType<T>> = {};
 
-	return (...args) => {
+	return (...args: Parameters<T>): ReturnType<T> => {
 		const key = args.toString();
 		if (key in cache) {
 			return cache[key];
 		} else {
-			cache[key] = callback(args);
+			cache[key] = callback(...args);
 			return cache[key];
 		}
 	};
 }
-
 const xyz = (x: number) => x * x;
 memoize(xyz);

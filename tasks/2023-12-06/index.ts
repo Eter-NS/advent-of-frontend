@@ -21,20 +21,18 @@ export class OrderController {
 
 export class Machine {
 	#stateHistory: string[] = [];
-	#state: string | null = null;
 
 	get state() {
-		return this.#state;
+		return this.#stateHistory.at(-1) || null;
 	}
 
 	set state(newState: string | null) {
 		if (newState === null) return;
-		this.#state = newState;
 		this.#stateHistory.push(newState);
 	}
 
 	performAudit() {
-		if (this.#state === null) return "No recent orders assigned";
+		if (!this.#stateHistory.length) return "No recent orders assigned";
 		return this.#stateHistory.map((state, index) => {
 			return `Order #${index + 1} - ${state}`;
 		});
