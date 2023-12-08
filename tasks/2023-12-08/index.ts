@@ -86,13 +86,3 @@ export class CountryStrategy implements LetterSort {
 			.east;
 	}
 }
-
-// const sorter = new LetterSorter(new CountryStrategy());
-
-// let letters: Letter[] = [
-// 	{ content: "Hi", country: "us", priority: "medium" },
-// 	{ content: "Halo", country: "de", priority: "low" },
-// 	{ content: "Cześć", country: "pl", priority: "high" },
-// ];
-// const sortedLetters = sorter.sortLetters(letters);
-// console.log(sortedLetters);
